@@ -103,7 +103,7 @@ class SpecialForm extends StatelessWidget {
               onActionPressed!(controller.text);
             }
           },
-          cursorColor: appBlue,
+          cursorColor: appPurple,
           decoration: InputDecoration(
               errorMaxLines: 1,
               errorStyle: const TextStyle(height: 0, fontSize: 0),
@@ -115,29 +115,31 @@ class SpecialForm extends StatelessWidget {
               suffixIcon: suffix,
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: borderColor ??
-                      (isDark ? fadedDarkBorder : fadedLightBorder),
+                  // color: borderColor ??
+                  //     (isDark ? fadedDarkBorder : fadedLightBorder),
                 ),
                 borderRadius: radius ?? BorderRadius.circular(height * 0.5),
               ),
               border: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: borderColor ??
-                      (isDark ? fadedDarkBorder : fadedLightBorder),
+                  // color: borderColor ??
+                  //     (isDark ? fadedDarkBorder : fadedLightBorder),
                 ),
                 borderRadius: radius ?? BorderRadius.circular(height * 0.5),
               ),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: borderColor ??
-                      (isDark ? fadedDarkBorder : fadedLightBorder),
+                  // color: borderColor ??
+                  //     (isDark ? fadedDarkBorder : fadedLightBorder),
                 ),
                 borderRadius: radius ?? BorderRadius.circular(height * 0.5),
               ),
               hintText: hint,
               hintStyle: hintStyle ??
                   context.textTheme.bodyMedium!.copyWith(
-                      color: isDark ? fadedDarkBorder : fadedLightBorder)),
+                      // color: isDark ? fadedDarkBorder : fadedLightBorder,
+                  ),
+          ),
           onChanged: (value) {
             if (onChange == null) return;
             onChange!(value);
@@ -258,7 +260,7 @@ class ComboBox extends StatelessWidget {
               : buttonDecoration ??
                   BoxDecoration(
                     borderRadius: BorderRadius.circular(4.r),
-                    border: Border.all(color: fadedLightBorder),
+                    //border: Border.all(color: fadedLightBorder),
                   ),
           elevation: buttonElevation,
         ),

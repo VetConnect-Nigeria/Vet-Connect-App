@@ -12,7 +12,7 @@ void showError(String message, {Color background = weirdGrey2, Color text = appP
   showToast(message, background: background, text: text);
 }
 
-void showToast(String message, {Color background = appPurple, Color text = Colors.white}) => Fluttertoast.showToast(
+void showToast(String message, {Color background = weirdGrey2, Color text = appPurple}) => Fluttertoast.showToast(
   msg: message,
   toastLength: Toast.LENGTH_SHORT,
   gravity: ToastGravity.SNACKBAR,
