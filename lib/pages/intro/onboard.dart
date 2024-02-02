@@ -16,6 +16,7 @@ class OnboardingPage extends StatefulWidget {
 class _OnboardingPageState extends State<OnboardingPage> {
   int index = 0;
   bool showPassword = false;
+  bool acceptTerms = false;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -102,6 +103,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             width: 375.w,
             height: 50.h,
             hint: "Your email",
+            type: TextInputType.emailAddress,
           ),
           SizedBox(height: 16.h),
           SpecialForm(
@@ -129,7 +131,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           Align(
             alignment: Alignment.centerRight,
             child: GestureDetector(
-              onTap: () {},
+              onTap: () => setState(() => index = 4),
               child:
                   Text("Forgot Password?", style: context.textTheme.bodySmall),
             ),
@@ -171,88 +173,400 @@ class _OnboardingPageState extends State<OnboardingPage> {
       );
 
   Widget get registerStage => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "Create account",
+            style: context.textTheme.titleLarge,
+          ),
+          SizedBox(height: 10.h),
+          Text(
+            "Welcome! Please enter your information below and get started",
+            style: context.textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 24.h),
+          SpecialForm(
+            controller: emailController,
+            width: 375.w,
+            height: 50.h,
+            hint: "Your email",
+          ),
+          SizedBox(height: 16.h),
+          SpecialForm(
+            controller: emailController,
+            width: 375.w,
+            height: 50.h,
+            obscure: true,
+            hint: "Password",
+            suffix: GestureDetector(
+              onTap: () => setState(() => showPassword = !showPassword),
+              child: AnimatedSwitcherTranslation.right(
+                duration: const Duration(milliseconds: 500),
+                child: Icon(
+                  showPassword
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                  key: ValueKey<bool>(showPassword),
+                  size: 18.r,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 16.h),
+          Row(
+            children: [
+              Checkbox(
+                value: acceptTerms,
+                onChanged: (val) => setState(() => acceptTerms = !acceptTerms),
+                checkColor: weirdGrey2,
+                activeColor: appPurple,
+              ),
+              Text("Accept Terms and Conditions",
+                  style: context.textTheme.bodySmall),
+            ],
+          ),
+          SizedBox(height: 20.h),
+          ElevatedButton(
+            onPressed: () => setState(() => index = 3),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: acceptTerms ? appPurple : disabled,
+              minimumSize: Size(327.w, 50.h),
+              maximumSize: Size(327.w, 50.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14.r),
+              ),
+            ),
+            child: Text(
+              "Create account",
+              style: context.textTheme.bodySmall!.copyWith(color: Colors.white),
+            ),
+          ),
+          SizedBox(height: 10.h),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                    text: "Already have an account?",
+                    style: context.textTheme.bodySmall),
+                TextSpan(
+                  text: " Log in here!",
+                  style:
+                      context.textTheme.bodySmall!.copyWith(color: appPurple),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => setState(() => index = 2),
+                ),
+              ],
+            ),
+          )
+        ],
+      );
+
+  Widget get validationPage => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "Validation Code",
+            style: context.textTheme.titleLarge,
+          ),
+          SizedBox(height: 10.h),
+          Text(
+            "Check your email inbox and enter the validation code here",
+            style: context.textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 24.h),
+          ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: disabled,
+              minimumSize: Size(327.w, 50.h),
+              maximumSize: Size(327.w, 50.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14.r),
+              ),
+            ),
+            child: Text(
+              "Confirm",
+              style: context.textTheme.bodySmall!.copyWith(color: Colors.white),
+            ),
+          ),
+          SizedBox(height: 10.h),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                    text: "Did not receive the code?",
+                    style: context.textTheme.bodySmall),
+                TextSpan(
+                  text: " Resend",
+                  style:
+                      context.textTheme.bodySmall!.copyWith(color: brightBlue),
+                ),
+              ],
+            ),
+          )
+        ],
+      );
+
+  Widget get forgotStage => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "Forgot password",
+            style: context.textTheme.titleLarge,
+          ),
+          SizedBox(height: 10.h),
+          Text(
+            "Enter your email address or phone number",
+            style: context.textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 24.h),
+          SpecialForm(
+            controller: emailController,
+            width: 375.w,
+            height: 50.h,
+            hint: "Your email/phone number",
+          ),
+          SizedBox(height: 47.h),
+          ElevatedButton(
+            onPressed: () => setState(() => index = 5),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: appPurple,
+              minimumSize: Size(327.w, 50.h),
+              maximumSize: Size(327.w, 50.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14.r),
+              ),
+            ),
+            child: Text(
+              "Continue",
+              style: context.textTheme.bodySmall!.copyWith(color: Colors.white),
+            ),
+          ),
+          SizedBox(height: 20.h),
+        ],
+      );
+
+  Widget get resetStage => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "Reset password",
+            style: context.textTheme.titleLarge,
+          ),
+          SizedBox(height: 24.h),
+          SpecialForm(
+            controller: emailController,
+            width: 375.w,
+            height: 50.h,
+            obscure: true,
+            hint: "Password",
+            suffix: GestureDetector(
+              onTap: () => setState(() => showPassword = !showPassword),
+              child: AnimatedSwitcherTranslation.right(
+                duration: const Duration(milliseconds: 500),
+                child: Icon(
+                  showPassword
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                  key: ValueKey<bool>(showPassword),
+                  size: 18.r,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 16.h),
+          SpecialForm(
+            controller: emailController,
+            width: 375.w,
+            height: 50.h,
+            obscure: true,
+            hint: "Confirm Password",
+            suffix: GestureDetector(
+              onTap: () => setState(() => showPassword = !showPassword),
+              child: AnimatedSwitcherTranslation.right(
+                duration: const Duration(milliseconds: 500),
+                child: Icon(
+                  showPassword
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                  key: ValueKey<bool>(showPassword),
+                  size: 18.r,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 47.h),
+          ElevatedButton(
+            onPressed: () => setState(() => index = 6),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: appPurple,
+              minimumSize: Size(327.w, 50.h),
+              maximumSize: Size(327.w, 50.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14.r),
+              ),
+            ),
+            child: Text(
+              "Submit",
+              style: context.textTheme.bodySmall!.copyWith(color: Colors.white),
+            ),
+          ),
+          SizedBox(height: 20.h),
+        ],
+      );
+
+  Widget get stepOne => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 24.h),
+          Text(
+            "Find a vet around you by using the location services",
+            textAlign: TextAlign.center,
+            style: context.textTheme.titleLarge,
+          ),
+          SizedBox(height: 10.h),
+          Text(
+            "Just turn on your location and you will locate the nearest pet cares",
+            style: context.textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 15.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 45.w,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: List.generate(
+                    4,
+                    (index) => Container(
+                      width: index != 1 ? 5.w : 15.w,
+                      height: 3.h,
+                      decoration: BoxDecoration(
+                        color: index == 1 ? appPurple : weirdBlack3,
+                        borderRadius: BorderRadius.circular(
+                          1.5.h,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              FloatingActionButton(
+                onPressed: () => setState(() => index = 7),
+                backgroundColor: appPurple,
+                child: const Icon(Icons.arrow_forward_rounded, color: Colors.white),
+              )
+            ],
+          )
+        ],
+      );
+
+  Widget get stepTwo => Column(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
+      SizedBox(height: 24.h),
       Text(
-        "Log in",
+        "Get the best treatment and care for your pets",
+        textAlign: TextAlign.center,
         style: context.textTheme.titleLarge,
       ),
       SizedBox(height: 10.h),
       Text(
-        "Welcome! Please enter your information below and get started",
+        "Get the best treatment for your pets with us",
         style: context.textTheme.bodyMedium,
         textAlign: TextAlign.center,
       ),
-      SizedBox(height: 24.h),
-      SpecialForm(
-        controller: emailController,
-        width: 375.w,
-        height: 50.h,
-        hint: "Your email",
-      ),
-      SizedBox(height: 16.h),
-      SpecialForm(
-        controller: emailController,
-        width: 375.w,
-        height: 50.h,
-        obscure: true,
-        hint: "Password",
-        suffix: GestureDetector(
-          onTap: () => setState(() => showPassword = !showPassword),
-          child: AnimatedSwitcherTranslation.right(
-            duration: const Duration(milliseconds: 500),
-            child: Icon(
-              showPassword
-                  ? Icons.visibility_outlined
-                  : Icons.visibility_off_outlined,
-              key: ValueKey<bool>(showPassword),
-              size: 18.r,
-              color: Colors.grey,
+      SizedBox(height: 15.h),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 45.w,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: List.generate(
+                4,
+                    (index) => Container(
+                  width: index != 2 ? 5.w : 15.w,
+                  height: 3.h,
+                  decoration: BoxDecoration(
+                    color: index == 2 ? appPurple : weirdBlack3,
+                    borderRadius: BorderRadius.circular(
+                      1.5.h,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-      SizedBox(height: 16.h),
-      Align(
-        alignment: Alignment.centerRight,
-        child: GestureDetector(
-          onTap: () {},
-          child:
-          Text("Forgot Password?", style: context.textTheme.bodySmall),
-        ),
-      ),
-      SizedBox(height: 47.h),
-      ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          backgroundColor: appPurple,
-          minimumSize: Size(327.w, 50.h),
-          maximumSize: Size(327.w, 50.h),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14.r),
-          ),
-        ),
-        child: Text(
-          "Log in",
-          style: context.textTheme.bodySmall!.copyWith(color: Colors.white),
-        ),
+          FloatingActionButton(
+            onPressed: () => setState(() => index = 8),
+            backgroundColor: appPurple,
+            child: const Icon(Icons.arrow_forward_rounded, color: Colors.white),
+          )
+        ],
+      )
+    ],
+  );
+
+  Widget get stepThree => Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      SizedBox(height: 24.h),
+      Text(
+        "Book an appointment with a professional vet doctor",
+        textAlign: TextAlign.center,
+        style: context.textTheme.titleLarge,
       ),
       SizedBox(height: 10.h),
-      RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-                text: "Don't have an account?",
-                style: context.textTheme.bodySmall),
-            TextSpan(
-              text: " Register here!",
-              style:
-              context.textTheme.bodySmall!.copyWith(color: appPurple),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => setState(() => index = 1),
+      Text(
+        "Get the best treatment for your pet with us",
+        style: context.textTheme.bodyMedium,
+        textAlign: TextAlign.center,
+      ),
+      SizedBox(height: 15.h),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 45.w,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: List.generate(
+                4,
+                    (index) => Container(
+                  width: index != 3 ? 5.w : 15.w,
+                  height: 3.h,
+                  decoration: BoxDecoration(
+                    color: index == 3 ? appPurple : weirdBlack3,
+                    borderRadius: BorderRadius.circular(
+                      1.5.h,
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ],
-        ),
+          ),
+          FloatingActionButton(
+            onPressed: () {},
+            backgroundColor: appPurple,
+            child: const Icon(Icons.arrow_forward_rounded, color: Colors.white),
+          )
+        ],
       )
     ],
   );
@@ -265,6 +579,18 @@ class _OnboardingPageState extends State<OnboardingPage> {
         return registerStage;
       case 2:
         return loginStage;
+      case 3:
+        return validationPage;
+      case 4:
+        return forgotStage;
+      case 5:
+        return resetStage;
+      case 6:
+        return stepOne;
+      case 7:
+        return stepTwo;
+      case 8:
+        return stepThree;
       default:
         return const SizedBox();
     }
@@ -277,6 +603,17 @@ class _OnboardingPageState extends State<OnboardingPage> {
       case 1:
       case 2:
         return Icons.person_2_outlined;
+      case 3:
+        return Icons.scanner_rounded;
+      case 4:
+      case 5:
+        return Icons.lock_outline_rounded;
+      case 6:
+        return Icons.location_on_rounded;
+      case 7:
+        return Icons.favorite_rounded;
+      case 8:
+        return Icons.calendar_month_rounded;
       default:
         return Icons.error_rounded;
     }
@@ -287,6 +624,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
+  }
+
+  double get height {
+    if (index == 4 || index >= 6) return 350.h;
+    if (index == 0 || index == 3 || index == 5) return 400.h;
+    return 500.h;
   }
 
   @override
@@ -313,7 +656,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 clipper: _OnboardClipper(edgeRadius: 40.r, circleRadius: 40.r),
                 child: Container(
                   width: 375.w,
-                  height: index == 0 ? 400.h : 500.h,
+                  height: height,
                   color: weirdGrey2,
                   padding: EdgeInsets.symmetric(horizontal: 35.w),
                   child: Column(
