@@ -19,7 +19,7 @@ dependencies:
   intl:
   path_provider:
   equatable:
-  flutter_boxicons:
+  remixicon:
   flutter_screenutil:
   flutter_spinkit:
   connectivity_plus:

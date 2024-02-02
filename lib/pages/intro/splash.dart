@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:vet_connect/misc/constants.dart';
 
 
@@ -23,12 +24,22 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Image.asset(
-          "assets/dog.jpg",
-          fit: BoxFit.cover,
-          width: 375.w,
-          height: 810.h,
-        ),
+        child: Stack(
+          children: [
+            Image.asset(
+              "assets/dog.jpg",
+              fit: BoxFit.cover,
+              width: 375.w,
+              height: 810.h,
+            ),
+            Positioned(
+              top: 100.h,
+              left: 20.w,
+              right: 20.w,
+              child: SvgPicture.asset("assets/LogoText.svg"),
+            ),
+          ]
+        )
       )
     );
   }

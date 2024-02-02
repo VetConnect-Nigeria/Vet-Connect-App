@@ -6,7 +6,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -107,7 +106,7 @@ class SpecialForm extends StatelessWidget {
           decoration: InputDecoration(
               errorMaxLines: 1,
               errorStyle: const TextStyle(height: 0, fontSize: 0),
-              fillColor: fillColor ?? Colors.transparent,
+              fillColor: fillColor ?? Colors.white,
               filled: true,
               contentPadding: padding ??
                   EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
@@ -115,30 +114,25 @@ class SpecialForm extends StatelessWidget {
               suffixIcon: suffix,
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  // color: borderColor ??
-                  //     (isDark ? fadedDarkBorder : fadedLightBorder),
+                  color: borderColor ?? Colors.black12
                 ),
-                borderRadius: radius ?? BorderRadius.circular(height * 0.5),
+                borderRadius: radius ?? BorderRadius.circular(14.r),
               ),
               border: OutlineInputBorder(
                 borderSide: BorderSide(
-                  // color: borderColor ??
-                  //     (isDark ? fadedDarkBorder : fadedLightBorder),
+                  color: borderColor ?? Colors.black12
                 ),
-                borderRadius: radius ?? BorderRadius.circular(height * 0.5),
+                borderRadius: radius ?? BorderRadius.circular(14.r),
               ),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  // color: borderColor ??
-                  //     (isDark ? fadedDarkBorder : fadedLightBorder),
+                  color: borderColor ?? Colors.black12
                 ),
-                borderRadius: radius ?? BorderRadius.circular(height * 0.5),
+                borderRadius: radius ?? BorderRadius.circular(14.r),
               ),
               hintText: hint,
               hintStyle: hintStyle ??
-                  context.textTheme.bodyMedium!.copyWith(
-                      // color: isDark ? fadedDarkBorder : fadedLightBorder,
-                  ),
+                  context.textTheme.bodyMedium!.copyWith(color: weirdBlack3),
           ),
           onChanged: (value) {
             if (onChange == null) return;
