@@ -29,12 +29,10 @@ class Pages
 {
   static const String splash = "splash";
   static const String onboarding = 'onboarding';
-  static const String register = 'register';
-  static const String login = 'login';
-  static const String emailVerification = 'verify-email';
   static const String home = 'home';
-  static const String boltnic = 'boltnic';
-  static const String notification = 'notification';
+  static const String inbox = 'inbox';
+  static const String bookAppointment = 'book-appointment';
+  static const String settings = 'settings';
 }
 
 const String loremIpsum = "Lorem ipsum dolor sit amet, consectetur. Nam ut cursus ipsum dolor sit amet. "

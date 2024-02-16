@@ -7,10 +7,14 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 
 import 'pages/intro/splash.dart';
 import 'pages/intro/onboard.dart';
+import 'pages/home/home.dart';
+import 'pages/home/inbox.dart';
+import 'pages/home/settings.dart';
+import 'pages/home/book_appointment.dart';
 import 'misc/constants.dart';
 
+import 'components/conversation.dart';
 import 'misc/notification_controller.dart';
-
 
 Future<void> main() async {
   await AwesomeNotifications().initialize(
@@ -34,7 +38,7 @@ Future<void> main() async {
     ],
   );
   bool isNotificationAllowed =
-  await AwesomeNotifications().isNotificationAllowed();
+      await AwesomeNotifications().isNotificationAllowed();
   if (!isNotificationAllowed) {
     AwesomeNotifications().requestPermissionToSendNotifications();
   }
@@ -68,6 +72,26 @@ class _VetConnectState extends State<VetConnect> {
           name: Pages.onboarding,
           builder: (_, __) => const OnboardingPage(),
         ),
+        GoRoute(
+          path: Pages.home.path,
+          name: Pages.home,
+          builder: (_, __) => const Homepage(),
+        ),
+        GoRoute(
+          path: Pages.settings.path,
+          name: Pages.settings,
+          builder: (_, __) => const SettingsPage(),
+        ),
+        GoRoute(
+          path: Pages.bookAppointment.path,
+          name: Pages.bookAppointment,
+          builder: (_, __) => const BookAppointmentPage(),
+        ),
+        GoRoute(
+          path: Pages.inbox.path,
+          name: Pages.inbox,
+          builder: (_, state) => InboxPage(conversation: state.extra as Conversation),
+        ),
       ],
     );
 
@@ -77,12 +101,12 @@ class _VetConnectState extends State<VetConnect> {
               context, receivedAction),
       onNotificationCreatedMethod:
           (ReceivedNotification receivedNotification) =>
-          NotificationController.onNotificationCreatedMethod(
-              context, receivedNotification),
+              NotificationController.onNotificationCreatedMethod(
+                  context, receivedNotification),
       onNotificationDisplayedMethod:
           (ReceivedNotification receivedNotification) =>
-          NotificationController.onNotificationDisplayedMethod(
-              context, receivedNotification),
+              NotificationController.onNotificationDisplayedMethod(
+                  context, receivedNotification),
       onDismissActionReceivedMethod: (ReceivedAction receivedAction) =>
           NotificationController.onDismissActionReceivedMethod(
               context, receivedAction),

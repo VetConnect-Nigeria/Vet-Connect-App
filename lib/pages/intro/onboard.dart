@@ -138,7 +138,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           SizedBox(height: 47.h),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () => context.router.pushNamed(Pages.home),
             style: ElevatedButton.styleFrom(
               backgroundColor: appPurple,
               minimumSize: Size(327.w, 50.h),
@@ -551,7 +551,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     (index) => Container(
                   width: index != 3 ? 5.w : 15.w,
                   height: 3.h,
-                  decoration: BoxDecoration(
+                  decoration: BoxDecoration( 
                     color: index == 3 ? appPurple : weirdBlack3,
                     borderRadius: BorderRadius.circular(
                       1.5.h,

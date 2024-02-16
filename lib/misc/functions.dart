@@ -84,7 +84,7 @@ String formatDateRaw(DateTime date, {bool shorten = false}) =>
 String formatDateWithTime(DateTime date, {bool shorten = false}) =>
     formatDate(DateFormat("dd/MM/yyy").format(date), shorten: shorten, time: date);
 
-
+String formatTime(DateTime date) => " ${(date.hour - 12) < 10 ? "0" : ""}${date.hour - 12}:${date.minute} ${date.hour < 12 ? "AM" : "PM"}";
 
 
 String formatDate(String dateTime, {bool shorten = false, DateTime? time}) {
