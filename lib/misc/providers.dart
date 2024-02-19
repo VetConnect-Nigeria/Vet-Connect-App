@@ -81,6 +81,13 @@ final StateProvider<List<Appointment>> upcomingAppointmentsProvider =
       date: DateTime.now(),
       time: TimeOfDay.now(),
     ),
+    Appointment(
+      id: "id5",
+      image: "assets/jet.jpg",
+      name: "Sam's Place",
+      date: DateTime.now(),
+      time: TimeOfDay.now(),
+    ),
   ],
 );
 
@@ -121,28 +128,35 @@ final StateProvider<List<Appointment>> pastAppointmentsProvider = StateProvider(
       date: DateTime.now(),
       time: TimeOfDay.now(),
     ),
+    Appointment(
+      id: "id5",
+      image: "assets/jet.jpg",
+      name: "Sam's Place",
+      date: DateTime.now(),
+      time: TimeOfDay.now(),
+    ),
   ],
 );
 
 final StateProvider<List<n.Notification>> notificationProvider = StateProvider(
   (ref) => const [
     n.Notification(
-      header: "You have an upcoming appointment at Sam's place",
+      header: "Upcoming appointment at Sam's place",
       id: "ID 0",
       read: true,
     ),
     n.Notification(
-      header: "You have an upcoming appointment at Sam's place",
+      header: "Upcoming appointment at Sam's place",
       id: "ID 1",
       read: false,
     ),
     n.Notification(
-      header: "You have an upcoming appointment at Sam's place",
+      header: "Upcoming appointment at Sam's place",
       id: "ID 2",
       read: false,
     ),
     n.Notification(
-      header: "You have an upcoming appointment at Sam's place",
+      header: "Upcoming appointment at Sam's place",
       id: "ID 3",
       read: true,
     ),

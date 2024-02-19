@@ -50,6 +50,8 @@ dependencies:
   jiffy:
   rxdart:
   google_maps_flutter:
+  table_calendar:
+  firebase_core: 
 
 dev_dependencies:
   flutter_test:

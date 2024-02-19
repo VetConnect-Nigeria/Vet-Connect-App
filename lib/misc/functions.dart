@@ -78,6 +78,8 @@ String formatLocation(String location,
 
 String currency() => NumberFormat.simpleCurrency(name: "NGN").currencySymbol;
 
+String formatBareDate(DateTime date) => DateFormat("dd/MM/yyyy").format(date);
+
 String formatDateRaw(DateTime date, {bool shorten = false}) =>
     formatDate(DateFormat("dd/MM/yyy").format(date), shorten: shorten);
 

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "559402225071",
+    "project_id": "vetconnect-5d5e7",
+    "storage_bucket": "vetconnect-5d5e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559402225071:android:993bfd3ed2874e7aab735a",
+        "android_client_info": {
+          "package_name": "com.vet.vet_connect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "559402225071-qei8bttn131gc9uu7but2sjmr7miais4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhM2aLSGEn1cEjwpYGl6H07-h6gCuxnj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "559402225071-qei8bttn131gc9uu7but2sjmr7miais4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

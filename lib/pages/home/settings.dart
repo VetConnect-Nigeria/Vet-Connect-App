@@ -52,7 +52,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 onChanged: (val) =>
                     invertBoolProvider(ref, locationAccessProvider),
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 15.h),
               _SettingContainer(
                 header: "Photo Access",
                 content: "Access to your media",
@@ -75,9 +75,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 onChanged: (val) =>
                     invertBoolProvider(ref, pushNotificationsProvider),
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 15.h),
               _SettingContainer(
-                header: "Appointment Reminder",
+                header: "Reminder",
                 content: "Get regular updates",
                 icon: Remix.calendar_fill,
                 value: ref.watch(appointmentReminderProvider),
@@ -134,11 +134,11 @@ class _SettingContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 80.r,
-                width: 80.r,
+                height: 60.r,
+                width: 60.r,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: brightBlue.withOpacity(0.6),
+                    color: const Color(0xFFD1E6FF),
                     borderRadius: BorderRadius.circular(8.r),
                     border: Border.all(color: disabled),
                   ),
@@ -156,7 +156,7 @@ class _SettingContainer extends StatelessWidget {
                 children: [
                   Text(
                     header,
-                    style: context.textTheme.titleSmall,
+                    style: context.textTheme.titleSmall!.copyWith(fontSize: 18.sp),
                   ),
                   Text(
                     content,

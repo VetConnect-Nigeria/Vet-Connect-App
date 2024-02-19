@@ -627,8 +627,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   double get height {
-    if (index == 4 || index >= 6) return 350.h;
-    if (index == 0 || index == 3 || index == 5) return 400.h;
+    if (index == 4 || index >= 6) return 400.h;
+    if (index == 0 || index == 3 || index == 5) return 450.h;
     return 500.h;
   }
 

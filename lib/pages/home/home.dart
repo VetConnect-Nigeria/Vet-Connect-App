@@ -24,9 +24,9 @@ class _HomepageState extends ConsumerState<Homepage> {
   void initState() {
     super.initState();
     navItems = const [
-      AppointmentsPage(),
-      ChatPage(),
       MapPage(),
+      ChatPage(),
+      AppointmentsPage(),
       NotificationPage(),
     ];
   }
@@ -42,6 +42,13 @@ class _HomepageState extends ConsumerState<Homepage> {
           children: navItems,
         ),
       ),
+      floatingActionButton: index == 2
+          ? FloatingActionButton(
+              onPressed: () => context.router.pushNamed(Pages.bookAppointment),
+              backgroundColor: appPurple,
+              child: const Icon(Icons.add_rounded, color: Colors.white),
+            )
+          : null,
       bottomNavigationBar: BottomNavigationBar(
         elevation: 1.0,
         onTap: (page) =>

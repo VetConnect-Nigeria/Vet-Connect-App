@@ -80,42 +80,43 @@ class _AppointmentsPageState extends ConsumerState<AppointmentsPage>
                 ],
               ),
               SizedBox(height: 20.h),
-              TabBarView(
-                controller: controller,
-                children: [
-                  Expanded(
-                    child: RefreshIndicator(
+              SizedBox(
+                height: 550.h,
+                child: TabBarView(
+                  controller: controller,
+                  children: [
+                    RefreshIndicator(
                       onRefresh: refreshUpcomingAppointments,
                       child: GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          mainAxisExtent: 150.h,
+                          crossAxisCount: 2,
+                          mainAxisExtent: 210.h,
                           crossAxisSpacing: 10.w,
                           mainAxisSpacing: 10.w,
                         ),
                         itemBuilder: (_, index) => _AppointmentContainer(
                           appointment: upcomingAppointments[index],
                         ),
+                        itemCount: upcomingAppointments.length,
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: RefreshIndicator(
+                    RefreshIndicator(
                       onRefresh: refreshPastAppointments,
                       child: GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          mainAxisExtent: 150.h,
+                          crossAxisCount: 2,
+                          mainAxisExtent: 210.h,
                           crossAxisSpacing: 10.w,
                           mainAxisSpacing: 10.w,
                         ),
                         itemBuilder: (_, index) => _AppointmentContainer(
                           appointment: pastAppointments[index],
                         ),
+                        itemCount: pastAppointments.length,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               )
             ],
           ),
@@ -137,10 +138,11 @@ class _AppointmentContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 110.w,
-      height: 150.h,
+      height: 210.h,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15.r),
+        border: Border.all(color: Colors.black12),
         boxShadow: const [
           BoxShadow(color: Colors.black12, spreadRadius: 0.5, blurRadius: 1.0)
         ],
@@ -161,7 +163,7 @@ class _AppointmentContainer extends StatelessWidget {
           ),
           SizedBox(height: 10.h),
           Text(
-            "Date: ${formatDateRaw(appointment.date)}",
+            "Date: ${formatBareDate(appointment.date)}",
             style: context.textTheme.bodyMedium,
           ),
           SizedBox(height: 10.h),
