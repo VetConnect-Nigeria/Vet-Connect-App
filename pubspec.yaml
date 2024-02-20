@@ -50,6 +50,7 @@ dependencies:
   jiffy:
   rxdart:
   google_maps_flutter:
+  google_maps_flutter_web:
   table_calendar:
   firebase_core: 
 

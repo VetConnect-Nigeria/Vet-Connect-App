@@ -46,12 +46,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           SizedBox(height: 24.h),
           Text(
-            "Personalized Pet Profiles",
+            "Personalized Animal Profiles",
             style: context.textTheme.titleLarge,
           ),
           SizedBox(height: 10.h),
           Text(
-            "Create personalized profiles for each of your beloved pets on VetConnect. "
+            "Create personalized profiles for each of your pets and livestock on VetConnect. "
             "Share their name, breed, and age while connecting with a vibrant veterinary community.",
             style: context.textTheme.bodyMedium,
             textAlign: TextAlign.center,
@@ -426,13 +426,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
         children: [
           SizedBox(height: 24.h),
           Text(
-            "Find a vet around you by using the location services",
+            "Find a certified veterinarian around you by using the location services",
             textAlign: TextAlign.center,
             style: context.textTheme.titleLarge,
           ),
           SizedBox(height: 10.h),
           Text(
-            "Just turn on your location and you will locate the nearest pet cares",
+            "Just turn on your location and you will locate nearby animal care",
             style: context.textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
@@ -476,13 +476,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
     children: [
       SizedBox(height: 24.h),
       Text(
-        "Get the best treatment and care for your pets",
+        "Get the best treatment and care for animals",
         textAlign: TextAlign.center,
         style: context.textTheme.titleLarge,
       ),
       SizedBox(height: 10.h),
       Text(
-        "Get the best treatment for your pets with us",
+        "Get the best treatment for your pets and livestocks with us",
         style: context.textTheme.bodyMedium,
         textAlign: TextAlign.center,
       ),
@@ -526,13 +526,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
     children: [
       SizedBox(height: 24.h),
       Text(
-        "Book an appointment with a professional vet doctor",
+        "Book an appointment with a certified veterinarian",
         textAlign: TextAlign.center,
         style: context.textTheme.titleLarge,
       ),
       SizedBox(height: 10.h),
       Text(
-        "Get the best treatment for your pet with us",
+        "Get the best treatment for your animals with us",
         style: context.textTheme.bodyMedium,
         textAlign: TextAlign.center,
       ),
