@@ -38,9 +38,7 @@ class _InboxPageState extends ConsumerState<InboxPage> {
     super.dispose();
   }
 
-  void sendMessage() {
-
-  }
+  void sendMessage() {}
 
   @override
   Widget build(BuildContext context) {
@@ -84,77 +82,74 @@ class _InboxPageState extends ConsumerState<InboxPage> {
           child: SizedBox(
             width: 375.w,
             height: 800.h,
-            child: ColoredBox(
-              color: weirdGrey2,
-              child: ListView.separated(
-                itemBuilder: (_, index) {
-                  if (index == messages.length) {
-                    return SizedBox(height: 50.h);
-                  }
+            child: ListView.separated(
+              itemBuilder: (_, index) {
+                if (index == messages.length) {
+                  return SizedBox(height: 50.h);
+                }
 
-                  return Row(
-                    mainAxisAlignment: messages[index].senderID == currentUserID
-                        ? MainAxisAlignment.end
-                        : MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 15.w, vertical: 10.h),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          color: messages[index].senderID == currentUserID
-                              ? brightBlue
-                              : weirdBlue,
-                          image: messages[index].image != null
-                              ? DecorationImage(
-                                  image: AssetImage(messages[index].image!))
-                              : null,
-                        ),
-                        child: messages[index].text != null
-                            ? Column(
-                                children: [
-                                  Text(
-                                    messages[index].text!,
+                return Row(
+                  mainAxisAlignment: messages[index].senderID == currentUserID
+                      ? MainAxisAlignment.end
+                      : MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 15.w, vertical: 10.h),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                        color: messages[index].senderID == currentUserID
+                            ? brightBlue
+                            : weirdBlue,
+                        image: messages[index].image != null
+                            ? DecorationImage(
+                                image: AssetImage(messages[index].image!))
+                            : null,
+                      ),
+                      child: messages[index].text != null
+                          ? Column(
+                              children: [
+                                Text(
+                                  messages[index].text!,
+                                  style: context.textTheme.bodyMedium!.copyWith(
+                                    color: messages[index].senderID ==
+                                            currentUserID
+                                        ? Colors.white
+                                        : weirdBlack,
+                                  ),
+                                ),
+                                SizedBox(height: 10.h),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Text(
+                                    formatTime(messages[index].timeStamp),
                                     style:
-                                        context.textTheme.bodyMedium!.copyWith(
+                                        context.textTheme.bodySmall!.copyWith(
                                       color: messages[index].senderID ==
                                               currentUserID
                                           ? Colors.white
                                           : weirdBlack,
                                     ),
                                   ),
-                                  SizedBox(height: 10.h),
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text(
-                                      formatTime(messages[index].timeStamp),
-                                      style:
-                                          context.textTheme.bodySmall!.copyWith(
-                                        color: messages[index].senderID ==
-                                                currentUserID
-                                            ? Colors.white
-                                            : weirdBlack,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )
-                            : null,
-                      )
-                    ],
-                  );
-                },
-                separatorBuilder: (_, __) => SizedBox(height: 15.h),
-                itemCount: messages.length + 1,
-              ),
+                                )
+                              ],
+                            )
+                          : null,
+                    )
+                  ],
+                );
+              },
+              separatorBuilder: (_, __) => SizedBox(height: 15.h),
+              itemCount: messages.length + 1,
             ),
           ),
         ),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 70.h,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
+      bottomNavigationBar: AnimatedPadding(
+        padding: MediaQuery.of(context).viewInsets,
+        duration: const Duration(milliseconds: 500),
+        child: SizedBox(
+          height: 70.h,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -164,9 +159,7 @@ class _InboxPageState extends ConsumerState<InboxPage> {
                 width: 280.w,
                 height: 50.h,
                 action: TextInputAction.send,
-                onActionPressed: (text) {
-
-                },
+                onActionPressed: (text) {},
               ),
               IconButton(
                 onPressed: () {

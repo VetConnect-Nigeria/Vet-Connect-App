@@ -55,9 +55,9 @@ class _HomepageState extends ConsumerState<Homepage> {
             ref.watch(dashboardIndexProvider.notifier).state = page,
         unselectedItemColor: Colors.grey,
         unselectedLabelStyle:
-            context.textTheme.bodyMedium!.copyWith(color: Colors.grey),
+            context.textTheme.bodySmall!.copyWith(color: Colors.grey),
         selectedItemColor: appPurple,
-        selectedLabelStyle: context.textTheme.bodyMedium!.copyWith(
+        selectedLabelStyle: context.textTheme.bodySmall!.copyWith(
           color: appPurple,
           fontWeight: FontWeight.w500,
         ),

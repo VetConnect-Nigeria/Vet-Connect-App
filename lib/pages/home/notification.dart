@@ -69,8 +69,8 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                       child: Text(
                         notifications[index].header,
                         overflow: TextOverflow.fade,
-                        style: context.textTheme.titleSmall!
-                            .copyWith(fontWeight: FontWeight.w400),
+                        style: context.textTheme.titleSmall!.copyWith(
+                            fontWeight: FontWeight.w400, fontSize: 19.sp),
                       ),
                     ),
                     Row(

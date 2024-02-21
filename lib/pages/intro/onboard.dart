@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:vet_connect/misc/constants.dart';
 import 'package:vet_connect/misc/widgets.dart';
@@ -17,9 +18,37 @@ class _OnboardingPageState extends State<OnboardingPage> {
   int index = 0;
   bool showPassword = false;
   bool acceptTerms = false;
+  bool filledOTP = false;
+  bool fromForgot = false;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  final List<TextStyle?> otpStyles = [];
+
+  Color accentPurpleColor = const Color(0xFF6A53A1);
+  Color primaryColor = const Color(0xFF121212);
+  Color accentPinkColor = const Color(0xFFF99BBD);
+  Color accentDarkGreenColor = const Color(0xFF115C49);
+  Color accentYellowColor = const Color(0xFFFFB612);
+  Color accentOrangeColor = const Color(0xFFEA7A3B);
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (otpStyles.isEmpty) {
+      otpStyles.add(createStyle(accentPurpleColor));
+      otpStyles.add(createStyle(accentDarkGreenColor));
+      otpStyles.add(createStyle(accentOrangeColor));
+      otpStyles.add(createStyle(accentPinkColor));
+      otpStyles.add(createStyle(accentPurpleColor));
+    }
+  }
+
+  TextStyle? createStyle(Color color) {
+    ThemeData theme = Theme.of(context);
+    return theme.textTheme.bodyLarge?.copyWith(color: color);
+  }
 
   Widget get welcomeStage => Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -58,7 +87,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           SizedBox(height: 47.h),
           ElevatedButton(
-            onPressed: () => setState(() => index = 1),
+            onPressed: () => setState(() => index = 4),
             style: ElevatedButton.styleFrom(
               backgroundColor: appPurple,
               minimumSize: Size(327.w, 50.h),
@@ -75,7 +104,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           SizedBox(height: 10.h),
           GestureDetector(
-            onTap: () => setState(() => index = 2),
+            onTap: () => setState(() => index = 5),
             child: Text(
               "Log in",
               style: context.textTheme.bodyMedium,
@@ -131,7 +160,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           Align(
             alignment: Alignment.centerRight,
             child: GestureDetector(
-              onTap: () => setState(() => index = 4),
+              onTap: () => setState(() => index = 7),
               child:
                   Text("Forgot Password?", style: context.textTheme.bodySmall),
             ),
@@ -229,9 +258,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           SizedBox(height: 20.h),
           ElevatedButton(
-            onPressed: () => setState(() => index = 3),
+            onPressed: () => setState(() {
+              index = 6;
+              fromForgot = false;
+            }),
             style: ElevatedButton.styleFrom(
-              backgroundColor: acceptTerms ? appPurple : disabled,
+              backgroundColor:
+                  acceptTerms ? appPurple : appPurple.withOpacity(0.5),
               minimumSize: Size(327.w, 50.h),
               maximumSize: Size(327.w, 50.h),
               shape: RoundedRectangleBorder(
@@ -255,7 +288,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   style:
                       context.textTheme.bodySmall!.copyWith(color: appPurple),
                   recognizer: TapGestureRecognizer()
-                    ..onTap = () => setState(() => index = 2),
+                    ..onTap = () => setState(() => index = 5),
                 ),
               ],
             ),
@@ -277,10 +310,34 @@ class _OnboardingPageState extends State<OnboardingPage> {
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 24.h),
+          OtpTextField(
+            numberOfFields: 5,
+            fieldWidth: 50.r,
+            fillColor: Colors.white,
+            styles: otpStyles,
+            borderColor: accentPurpleColor,
+            showFieldAsBox: true,
+            onCodeChanged: (code) {
+              setState(() => filledOTP = code.length == 5);
+            },
+            onSubmit: (verificationCode) {
+              setState(() => filledOTP = verificationCode.length == 5);
+            }, // end onSubmit
+          ),
+          SizedBox(height: 40.h),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              if (fromForgot) {
+                setState(() {
+                  index = 8;
+                });
+              } else {
+                context.router.pushReplacementNamed(Pages.home);
+              }
+            },
             style: ElevatedButton.styleFrom(
-              backgroundColor: disabled,
+              backgroundColor:
+                  filledOTP ? appPurple : appPurple.withOpacity(0.5),
               minimumSize: Size(327.w, 50.h),
               maximumSize: Size(327.w, 50.h),
               shape: RoundedRectangleBorder(
@@ -332,7 +389,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           SizedBox(height: 47.h),
           ElevatedButton(
-            onPressed: () => setState(() => index = 5),
+            onPressed: () => setState(() {
+              index = 6;
+              fromForgot = true;
+            }),
             style: ElevatedButton.styleFrom(
               backgroundColor: appPurple,
               minimumSize: Size(327.w, 50.h),
@@ -403,7 +463,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           SizedBox(height: 47.h),
           ElevatedButton(
-            onPressed: () => setState(() => index = 6),
+            onPressed: () => setState(() => index = 5),
             style: ElevatedButton.styleFrom(
               backgroundColor: appPurple,
               minimumSize: Size(327.w, 50.h),
@@ -462,9 +522,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 ),
               ),
               FloatingActionButton(
-                onPressed: () => setState(() => index = 7),
+                onPressed: () => setState(() => index = 1),
                 backgroundColor: appPurple,
-                child: const Icon(Icons.arrow_forward_rounded, color: Colors.white),
+                child: const Icon(Icons.arrow_forward_rounded,
+                    color: Colors.white),
               )
             ],
           )
@@ -472,125 +533,128 @@ class _OnboardingPageState extends State<OnboardingPage> {
       );
 
   Widget get stepTwo => Column(
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      SizedBox(height: 24.h),
-      Text(
-        "Get the best treatment and care for animals",
-        textAlign: TextAlign.center,
-        style: context.textTheme.titleLarge,
-      ),
-      SizedBox(height: 10.h),
-      Text(
-        "Get the best treatment for your pets and livestocks with us",
-        style: context.textTheme.bodyMedium,
-        textAlign: TextAlign.center,
-      ),
-      SizedBox(height: 15.h),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 45.w,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(
-                4,
+          SizedBox(height: 24.h),
+          Text(
+            "Get the best treatment and care for animals",
+            textAlign: TextAlign.center,
+            style: context.textTheme.titleLarge,
+          ),
+          SizedBox(height: 10.h),
+          Text(
+            "Get the best treatment for your pets and livestocks with us",
+            style: context.textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 15.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 45.w,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: List.generate(
+                    4,
                     (index) => Container(
-                  width: index != 2 ? 5.w : 15.w,
-                  height: 3.h,
-                  decoration: BoxDecoration(
-                    color: index == 2 ? appPurple : weirdBlack3,
-                    borderRadius: BorderRadius.circular(
-                      1.5.h,
+                      width: index != 2 ? 5.w : 15.w,
+                      height: 3.h,
+                      decoration: BoxDecoration(
+                        color: index == 2 ? appPurple : weirdBlack3,
+                        borderRadius: BorderRadius.circular(
+                          1.5.h,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ),
-          FloatingActionButton(
-            onPressed: () => setState(() => index = 8),
-            backgroundColor: appPurple,
-            child: const Icon(Icons.arrow_forward_rounded, color: Colors.white),
+              FloatingActionButton(
+                onPressed: () => setState(() => index = 2),
+                backgroundColor: appPurple,
+                child: const Icon(Icons.arrow_forward_rounded,
+                    color: Colors.white),
+              )
+            ],
           )
         ],
-      )
-    ],
-  );
+      );
 
   Widget get stepThree => Column(
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      SizedBox(height: 24.h),
-      Text(
-        "Book an appointment with a certified veterinarian",
-        textAlign: TextAlign.center,
-        style: context.textTheme.titleLarge,
-      ),
-      SizedBox(height: 10.h),
-      Text(
-        "Get the best treatment for your animals with us",
-        style: context.textTheme.bodyMedium,
-        textAlign: TextAlign.center,
-      ),
-      SizedBox(height: 15.h),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 45.w,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(
-                4,
+          SizedBox(height: 24.h),
+          Text(
+            "Book an appointment with a certified veterinarian",
+            textAlign: TextAlign.center,
+            style: context.textTheme.titleLarge,
+          ),
+          SizedBox(height: 10.h),
+          Text(
+            "Get the best treatment for your animals with us",
+            style: context.textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 15.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 45.w,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: List.generate(
+                    4,
                     (index) => Container(
-                  width: index != 3 ? 5.w : 15.w,
-                  height: 3.h,
-                  decoration: BoxDecoration( 
-                    color: index == 3 ? appPurple : weirdBlack3,
-                    borderRadius: BorderRadius.circular(
-                      1.5.h,
+                      width: index != 3 ? 5.w : 15.w,
+                      height: 3.h,
+                      decoration: BoxDecoration(
+                        color: index == 3 ? appPurple : weirdBlack3,
+                        borderRadius: BorderRadius.circular(
+                          1.5.h,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ),
-          FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: appPurple,
-            child: const Icon(Icons.arrow_forward_rounded, color: Colors.white),
+              FloatingActionButton(
+                onPressed: () => setState(() => index = 3),
+                backgroundColor: appPurple,
+                child: const Icon(Icons.arrow_forward_rounded,
+                    color: Colors.white),
+              )
+            ],
           )
         ],
-      )
-    ],
-  );
+      );
 
   Widget get child {
     switch (index) {
       case 0:
-        return welcomeStage;
-      case 1:
-        return registerStage;
-      case 2:
-        return loginStage;
-      case 3:
-        return validationPage;
-      case 4:
-        return forgotStage;
-      case 5:
-        return resetStage;
-      case 6:
         return stepOne;
-      case 7:
+      case 1:
         return stepTwo;
-      case 8:
+      case 2:
         return stepThree;
+      case 3:
+        return welcomeStage;
+      case 4:
+        return registerStage;
+      case 5:
+        return loginStage;
+      case 6:
+        return validationPage;
+      case 7:
+        return forgotStage;
+      case 8:
+        return resetStage;
+
       default:
         return const SizedBox();
     }
@@ -599,21 +663,25 @@ class _OnboardingPageState extends State<OnboardingPage> {
   IconData get icon {
     switch (index) {
       case 0:
-        return Remix.edit_line;
+        return Icons.location_on_rounded;
+
       case 1:
+        return Icons.favorite_rounded;
       case 2:
-        return Icons.person_2_outlined;
+        return Icons.calendar_month_rounded;
+
       case 3:
-        return Icons.scanner_rounded;
+        return Remix.edit_line;
+
       case 4:
+        return Icons.person_2_outlined;
       case 5:
         return Icons.lock_outline_rounded;
       case 6:
-        return Icons.location_on_rounded;
+        return Remix.qr_scan_fill;
       case 7:
-        return Icons.favorite_rounded;
       case 8:
-        return Icons.calendar_month_rounded;
+        return Icons.scanner_rounded;
       default:
         return Icons.error_rounded;
     }
@@ -627,64 +695,77 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   double get height {
-    if (index == 4 || index >= 6) return 400.h;
-    if (index == 0 || index == 3 || index == 5) return 450.h;
+    if (index < 3) return 400.h;
     return 500.h;
+  }
+
+  bool get shouldPop {
+    if (index == 0) return true;
+    if (index < 3) {
+      setState(() => --index);
+      return false;
+    }
+
+    return false;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: appPurple,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            SizedBox(
-              height: 812.h,
-              child: Image.asset(
-                "assets/dog.jpg",
-                width: 375.w,
-                height: 500.h,
-                fit: BoxFit.cover,
-              ),
-            ),
-            Positioned(
-              bottom: 0.0,
-              left: 0.0,
-              right: 0.0,
-              child: ClipPath(
-                clipper: _OnboardClipper(edgeRadius: 40.r, circleRadius: 40.r),
-                child: Container(
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: appPurple,
+        body: SafeArea(
+          child: Stack(
+            children: [
+              SizedBox(
+                height: 812.h,
+                child: Image.asset(
+                  "assets/dog.jpg",
                   width: 375.w,
-                  height: height,
-                  color: weirdGrey2,
-                  padding: EdgeInsets.symmetric(horizontal: 35.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 10.h),
-                      Container(
-                        width: 60.r,
-                        height: 60.r,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: appPurple, width: 1.5),
-                          shape: BoxShape.circle,
+                  height: 500.h,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned(
+                bottom: 0.0,
+                left: 0.0,
+                right: 0.0,
+                child: ClipPath(
+                  clipper:
+                      _OnboardClipper(edgeRadius: 40.r, circleRadius: 40.r),
+                  child: Container(
+                    width: 375.w,
+                    height: height,
+                    color: weirdGrey,
+                    padding: EdgeInsets.symmetric(horizontal: 35.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 10.h),
+                        Container(
+                          width: 60.r,
+                          height: 60.r,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: appPurple, width: 1.5),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            icon,
+                            color: appPurple,
+                            size: 22.r,
+                          ),
                         ),
-                        child: Icon(
-                          icon,
-                          color: appPurple,
-                          size: 22.r,
-                        ),
-                      ),
-                      SizedBox(height: 20.h),
-                      child,
-                    ],
+                        SizedBox(height: 20.h),
+                        child,
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

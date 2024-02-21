@@ -1,9 +1,15 @@
+import 'dart:async';
+
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+
+import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
+import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'pages/intro/splash.dart';
 import 'pages/intro/onboard.dart';
@@ -43,7 +49,49 @@ Future<void> main() async {
     AwesomeNotifications().requestPermissionToSendNotifications();
   }
 
+  final GoogleMapsFlutterPlatform mapsImplementation =
+      GoogleMapsFlutterPlatform.instance;
+  if (mapsImplementation is GoogleMapsFlutterAndroid) {
+    mapsImplementation.useAndroidViewSurface = true;
+    await initializeMapRenderer();
+  }
+
+  if (await Permission.location.status.isDenied) {
+    await Permission.location.request();
+  }
+
   runApp(const ProviderScope(child: VetConnect()));
+}
+
+Completer<AndroidMapRenderer?>? _initializedRendererCompleter;
+
+/// Initializes map renderer to the `latest` renderer type for Android platform.
+///
+/// The renderer must be requested before creating GoogleMap instances,
+/// as the renderer can be initialized only once per application context.
+Future<AndroidMapRenderer?> initializeMapRenderer() async {
+  if (_initializedRendererCompleter != null) {
+    return _initializedRendererCompleter!.future;
+  }
+
+  final Completer<AndroidMapRenderer?> completer =
+      Completer<AndroidMapRenderer?>();
+  _initializedRendererCompleter = completer;
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final GoogleMapsFlutterPlatform mapsImplementation =
+      GoogleMapsFlutterPlatform.instance;
+  if (mapsImplementation is GoogleMapsFlutterAndroid) {
+    unawaited(mapsImplementation
+        .initializeWithRenderer(AndroidMapRenderer.latest)
+        .then((AndroidMapRenderer initializedRenderer) =>
+            completer.complete(initializedRenderer)));
+  } else {
+    completer.complete(null);
+  }
+
+  return completer.future;
 }
 
 class VetConnect extends StatefulWidget {
@@ -90,7 +138,8 @@ class _VetConnectState extends State<VetConnect> {
         GoRoute(
           path: Pages.inbox.path,
           name: Pages.inbox,
-          builder: (_, state) => InboxPage(conversation: state.extra as Conversation),
+          builder: (_, state) =>
+              InboxPage(conversation: state.extra as Conversation),
         ),
       ],
     );

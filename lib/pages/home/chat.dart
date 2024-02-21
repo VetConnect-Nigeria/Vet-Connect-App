@@ -50,14 +50,15 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 height: 40.h,
                 hint: "Search",
                 prefix: Icon(Remix.search_line, size: 26.r),
-                borderColor: brightBlue,
+                borderColor: const Color(0xFFD1E6FF),
                 radius: BorderRadius.circular(8.r),
               ),
               SizedBox(height: 20.h),
             ],
           ),
         ),
-        Expanded(
+        SizedBox(
+          height: 500.h,
           child: RefreshIndicator(
             onRefresh: refresh,
             child: ListView.builder(
@@ -67,24 +68,20 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 }
 
                 return ListTile(
-                  tileColor: brightBlue,
-                  onTap: () => context.router.pushNamed(Pages.inbox,
-                      extra: conversations[index].userId),
-                  leading: Stack(
-                    children: [
-                      CircleAvatar(
-                        radius: 25.r,
-                        backgroundImage: AssetImage(conversations[index].image),
-                      ),
-                      if (conversations[index].active)
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: CircleAvatar(
-                            backgroundColor: weirdYellow,
-                            radius: 5.r,
-                          ),
-                        )
-                    ],
+                  onTap: () => context.router
+                      .pushNamed(Pages.inbox, extra: conversations[index]),
+                  leading: CircleAvatar(
+                    radius: 25.r,
+                    backgroundImage: AssetImage(conversations[index].image),
+                    child: conversations[index].active
+                        ? Align(
+                            alignment: Alignment.bottomRight,
+                            child: CircleAvatar(
+                              backgroundColor: weirdYellow,
+                              radius: 5.r,
+                            ),
+                          )
+                        : null,
                   ),
                   title: Text(
                     conversations[index].header,
@@ -99,7 +96,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "!8:31",
+                        "18:31",
                         style: context.textTheme.bodySmall,
                       ),
                       if (conversations[index].count > 0)
