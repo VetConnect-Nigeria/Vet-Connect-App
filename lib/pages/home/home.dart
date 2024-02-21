@@ -24,7 +24,7 @@ class _HomepageState extends ConsumerState<Homepage> {
   void initState() {
     super.initState();
     navItems = const [
-      MapPage(),
+      MapSample(),
       ChatPage(),
       AppointmentsPage(),
       NotificationPage(),

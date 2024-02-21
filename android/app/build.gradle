@@ -34,7 +34,7 @@ android {
 
     defaultConfig {
         applicationId "com.vet.vet_connect"
-        minSdkVersion 26
+        minSdkVersion 21
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
