@@ -49,49 +49,16 @@ Future<void> main() async {
     AwesomeNotifications().requestPermissionToSendNotifications();
   }
 
-  final GoogleMapsFlutterPlatform mapsImplementation =
-      GoogleMapsFlutterPlatform.instance;
-  if (mapsImplementation is GoogleMapsFlutterAndroid) {
-    mapsImplementation.useAndroidViewSurface = true;
-    await initializeMapRenderer();
-  }
-
-  if (await Permission.location.status.isDenied) {
+  if (await Permission.location.isDenied) {
     await Permission.location.request();
   }
 
-  runApp(const ProviderScope(child: VetConnect()));
-}
-
-Completer<AndroidMapRenderer?>? _initializedRendererCompleter;
-
-/// Initializes map renderer to the `latest` renderer type for Android platform.
-///
-/// The renderer must be requested before creating GoogleMap instances,
-/// as the renderer can be initialized only once per application context.
-Future<AndroidMapRenderer?> initializeMapRenderer() async {
-  if (_initializedRendererCompleter != null) {
-    return _initializedRendererCompleter!.future;
-  }
-
-  final Completer<AndroidMapRenderer?> completer =
-      Completer<AndroidMapRenderer?>();
-  _initializedRendererCompleter = completer;
-
-  WidgetsFlutterBinding.ensureInitialized();
-
-  final GoogleMapsFlutterPlatform mapsImplementation =
-      GoogleMapsFlutterPlatform.instance;
+  final mapsImplementation = GoogleMapsFlutterPlatform.instance;
   if (mapsImplementation is GoogleMapsFlutterAndroid) {
-    unawaited(mapsImplementation
-        .initializeWithRenderer(AndroidMapRenderer.latest)
-        .then((AndroidMapRenderer initializedRenderer) =>
-            completer.complete(initializedRenderer)));
-  } else {
-    completer.complete(null);
+    mapsImplementation.useAndroidViewSurface = true;
   }
 
-  return completer.future;
+  runApp(const ProviderScope(child: VetConnect()));
 }
 
 class VetConnect extends StatefulWidget {

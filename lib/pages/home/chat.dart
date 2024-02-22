@@ -88,7 +88,9 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                     style: context.textTheme.titleSmall,
                   ),
                   subtitle: Text(
-                    conversations[index].subtitle.substring(0, 25),
+                    conversations[index].subtitle.length > 25
+                        ? conversations[index].subtitle.substring(0, 25) + "..."
+                        : conversations[index].subtitle,
                     style: context.textTheme.bodyMedium,
                   ),
                   trailing: Column(

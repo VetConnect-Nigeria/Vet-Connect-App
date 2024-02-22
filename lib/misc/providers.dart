@@ -28,7 +28,7 @@ final StateProvider<List<Conversation>> conversationListProvider =
       timestamp: DateTime.now(),
       active: false,
       userId: "123456",
-      count: 12,
+      count: 4,
     ),
     Conversation(
       id: "ID 2",
@@ -38,8 +38,18 @@ final StateProvider<List<Conversation>> conversationListProvider =
       timestamp: DateTime.now(),
       active: false,
       userId: "123456",
+      count: 1,
+    ),
+    Conversation(
+      id: "ID 3",
+      image: "assets/vth.jpg",
+      header: "FUNAAB VTH",
+      subtitle: "Thank you, doc!",
+      timestamp: DateTime.now(),
+      active: true,
+      userId: "123456",
       count: 0,
-    )
+    ),
   ],
 );
 

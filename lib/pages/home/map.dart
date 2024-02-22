@@ -104,7 +104,7 @@ class MapSampleState extends State<MapSample> {
         initialCameraPosition: CameraPosition(
           target: LatLng(_locationData?.latitude ?? 7.235983,
               _locationData?.longitude ?? 3.438542),
-          zoom: 14,
+          zoom: 12,
         ),
         markers: Set.from(_markers),
         myLocationEnabled: true,
