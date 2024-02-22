@@ -13,7 +13,7 @@ final StateProvider<List<Conversation>> conversationListProvider =
     Conversation(
       id: "ID 0",
       image: "assets/yacht.jpg",
-      header: "Sam's Pet Place",
+      header: "Dr. Sam",
       subtitle: "Please take a look at the images",
       timestamp: DateTime.now(),
       active: true,
@@ -59,7 +59,7 @@ final StateProvider<List<Appointment>> upcomingAppointmentsProvider =
     Appointment(
       id: "id1",
       image: "assets/jet.jpg",
-      name: "Sam's Place",
+      name: "Dr. Sam",
       date: DateTime.now(),
       time: TimeOfDay.now(),
     ),
@@ -73,7 +73,7 @@ final StateProvider<List<Appointment>> upcomingAppointmentsProvider =
     Appointment(
       id: "id2",
       image: "assets/jet.jpg",
-      name: "Sam's Place",
+      name: "Dr. Sam",
       date: DateTime.now(),
       time: TimeOfDay.now(),
     ),
@@ -94,7 +94,7 @@ final StateProvider<List<Appointment>> upcomingAppointmentsProvider =
     Appointment(
       id: "id5",
       image: "assets/jet.jpg",
-      name: "Sam's Place",
+      name: "Dr. Sam",
       date: DateTime.now(),
       time: TimeOfDay.now(),
     ),
@@ -120,14 +120,14 @@ final StateProvider<List<Appointment>> pastAppointmentsProvider = StateProvider(
     Appointment(
       id: "id1",
       image: "assets/jet.jpg",
-      name: "Sam's Place",
+      name: "Dr. Sam",
       date: DateTime.now(),
       time: TimeOfDay.now(),
     ),
     Appointment(
       id: "id2",
       image: "assets/jet.jpg",
-      name: "Sam's Place",
+      name: "Dr. Sam",
       date: DateTime.now(),
       time: TimeOfDay.now(),
     ),
@@ -158,7 +158,7 @@ final StateProvider<List<Appointment>> pastAppointmentsProvider = StateProvider(
 final StateProvider<List<n.Notification>> notificationProvider = StateProvider(
   (ref) => const [
     n.Notification(
-      header: "Upcoming appointment at Sam's place",
+      header: "Upcoming appointment with Dr. Sam",
       id: "ID 0",
       read: true,
     ),

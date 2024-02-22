@@ -16,7 +16,7 @@ class MapSampleState extends State<MapSample> {
   final Location _location = Location();
   late bool _serviceEnabled;
   late PermissionStatus _permissionGranted;
-  late LocationData _locationData;
+  LocationData? _locationData;
 
   @override
   void initState() {
@@ -65,8 +65,9 @@ class MapSampleState extends State<MapSample> {
         markerId: MarkerId("location1"),
         position: LatLng(7.174111, 3.408801),
         infoWindow: InfoWindow(
-          title: "Dr. Ben's Clinic",
-          snippet: "Expert veterinary care for your pets.",
+          title: "Dr. Ben",
+          snippet:
+              "Expert veterinary care for your pets, Certified veterinarian.",
         ),
       ),
       const Marker(
@@ -81,8 +82,26 @@ class MapSampleState extends State<MapSample> {
         markerId: MarkerId("location3"),
         position: LatLng(7.221227, 3.446593),
         infoWindow: InfoWindow(
-          title: "Dr. Taiwo's Office",
-          snippet: "Comprehensive animal wellness exams and treatments.",
+          title: "Dr. Taiwo",
+          snippet:
+              "Comprehensive animal wellness exams and treatments, Certified veterinarian.",
+        ),
+      ),
+      const Marker(
+        markerId: MarkerId("location4"),
+        position: LatLng(7.214324, 3.383747),
+        infoWindow: InfoWindow(
+          title: "Dr. Sam",
+          snippet: "Certified veterinarian.",
+        ),
+      ),
+      const Marker(
+        markerId: MarkerId("location5"),
+        position: LatLng(7.139826, 3.328759),
+        infoWindow: InfoWindow(
+          title: "Ogun State Veterinary Hospital Complex",
+          snippet:
+              "HQ of Ogun state veterinary department, Ministry of Agriculture",
         ),
       ),
       // Add more markers as needed
