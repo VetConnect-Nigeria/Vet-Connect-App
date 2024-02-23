@@ -61,7 +61,7 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
         ),
         centerTitle: true,
         title: Text(
-          "Book Appointments",
+          "Book an Appointment",
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
