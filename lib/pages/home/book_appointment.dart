@@ -11,6 +11,43 @@ class BookAppointmentPage extends StatefulWidget {
 }
 
 class _BookAppointmentPageState extends State<BookAppointmentPage> {
+  DateTime _selectedDay = DateTime.now();
+  DateTime _focusedDay = DateTime.now();
+  TimeOfDay? _selectedTime;
+
+  final List<TimeOfDay> _availableTimes = [
+    TimeOfDay(hour: 9, minute: 0),
+    TimeOfDay(hour: 12, minute: 0),
+    TimeOfDay(hour: 16, minute: 0),
+  ];
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showModalBottomSheet<TimeOfDay>(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 250.h, // Adjust the height as necessary
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ..._availableTimes.map((TimeOfDay time) {
+                return ListTile(
+                  title: Text('${time.format(context)}'),
+                  onTap: () => Navigator.of(context).pop(time),
+                );
+              }).toList(),
+            ],
+          ),
+        );
+      },
+    );
+    if (picked != null && picked != _selectedTime) {
+      setState(() {
+        _selectedTime = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,12 +57,12 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
           icon: const Icon(Icons.chevron_left_rounded),
           iconSize: 26.r,
           splashRadius: 20.r,
-          onPressed: () => context.router.pop(),
+          onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
         title: Text(
           "Book Appointments",
-          style: context.textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
       body: SafeArea(
@@ -40,13 +77,17 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
                   children: [
                     TextSpan(
                       text: "Note: ",
-                      style: context.textTheme.bodyMedium!
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
                           .copyWith(fontWeight: FontWeight.w500),
                     ),
                     TextSpan(
                       text:
-                          "The disabled date and time shows the unavailablilty of the doctor, kindly choose available options",
-                      style: context.textTheme.bodyMedium!
+                          "The date and time depends on the availability of the veterinarian, kindly choose available options.",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
                           .copyWith(fontWeight: FontWeight.w400),
                     ),
                   ],
@@ -56,23 +97,52 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
               TableCalendar(
                 firstDay: DateTime.utc(2010, 10, 16),
                 lastDay: DateTime.utc(2030, 3, 14),
-                focusedDay: DateTime.now(),
+                focusedDay: _focusedDay,
+                selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                onDaySelected: (selectedDay, focusedDay) {
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    _focusedDay = focusedDay;
+                  });
+                },
+                onPageChanged: (focusedDay) {
+                  _focusedDay = focusedDay;
+                },
               ),
               SizedBox(height: 30.h),
-              Text("Available Time", style: context.textTheme.titleSmall),
-              SizedBox(height: 30.h),
+              Text("Available Time",
+                  style: Theme.of(context).textTheme.titleSmall),
+              SizedBox(height: 20.h),
               GestureDetector(
-                onTap: () => showTimePicker(
-                  context: context,
-                  initialTime: TimeOfDay.now(),
+                onTap: () => _selectTime(context),
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _selectedTime?.format(context) ?? "Select Time",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      Icon(Icons.arrow_drop_down, size: 24.r),
+                    ],
+                  ),
                 ),
-                child: const Text("Select Time"),
               ),
               SizedBox(height: 20.h),
               ElevatedButton(
-                onPressed: () => context.router.pop(),
+                onPressed: () {
+                  Navigator.of(context)
+                      .pop(); // Or your custom navigation logic
+                },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: appPurple,
+                  backgroundColor:
+                      Colors.deepPurple, // Replace with your appPurple color
                   minimumSize: Size(327.w, 50.h),
                   maximumSize: Size(327.w, 50.h),
                   shape: RoundedRectangleBorder(
@@ -81,7 +151,9 @@ class _BookAppointmentPageState extends State<BookAppointmentPage> {
                 ),
                 child: Text(
                   "Book Appointment",
-                  style: context.textTheme.bodySmall!
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
                       .copyWith(color: Colors.white),
                 ),
               ),
