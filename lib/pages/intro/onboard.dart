@@ -792,10 +792,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     });
     if (user != null) {
       showToast(message: "Your account is successfully created");
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MapSample()),
-      );
+      context.router.pushNamed(Pages.home);
     } else {
       showToast(message: "Some error happend");
     }
@@ -816,10 +813,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     });
     if (user != null) {
       showToast(message: "You are successfully signed in");
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MapSample()),
-      );
+      context.router.pushNamed(Pages.home);
     } else {
       showToast(message: "Some error happend");
     }
