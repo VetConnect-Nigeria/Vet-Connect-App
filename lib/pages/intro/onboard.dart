@@ -10,8 +10,6 @@ import 'package:animated_switcher_plus/animated_switcher_plus.dart';
 import 'package:vet_connect/user_auth/firebase_auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../home/map.dart';
-
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
 
@@ -396,7 +394,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           SizedBox(height: 10.h),
           Text(
-            "Enter your email address or phone number",
+            "Enter your email address",
             style: context.textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
@@ -405,14 +403,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
             controller: emailController,
             width: 375.w,
             height: 50.h,
-            hint: "Your email/phone number",
+            hint: "Your email",
           ),
           SizedBox(height: 47.h),
           ElevatedButton(
-            onPressed: () => setState(() {
-              index = 6;
-              fromForgot = true;
-            }),
+            onPressed: _resetPassword,
             style: ElevatedButton.styleFrom(
               backgroundColor: appPurple,
               minimumSize: Size(327.w, 50.h),
@@ -811,9 +806,28 @@ class _OnboardingPageState extends State<OnboardingPage> {
       isSigningUp = true;
     });
 
-    String email = emailController.text;
-    String password = passwordController.text;
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
 
+    showDialog(
+      context: context,
+      barrierDismissible:
+          false, // The user cannot dismiss the dialog by tapping outside it.
+      builder: (BuildContext context) {
+        return const Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0, // Removes shadow under the dialog
+          child: Column(
+            mainAxisSize: MainAxisSize.min, // Use minimum space
+            children: <Widget>[
+              CircularProgressIndicator(),
+              SizedBox(height: 15), // Add some spacing
+              Text('Loading...', style: TextStyle(color: Colors.white)),
+            ],
+          ),
+        );
+      },
+    );
     User? user = await _auth.signUpWithEmailAndPassword(email, password);
 
     setState(() {
@@ -821,9 +835,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
     });
     if (user != null) {
       showToast(message: "Your account is successfully created");
+      Navigator.of(context, rootNavigator: true).pop();
       context.router.pushNamed(Pages.home);
     } else {
       showToast(message: "Retry");
+      Navigator.of(context, rootNavigator: true).pop();
     }
   }
 
@@ -832,8 +848,28 @@ class _OnboardingPageState extends State<OnboardingPage> {
       _isSigning = true;
     });
 
-    String email = emailController.text;
-    String password = passwordController.text;
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+
+    showDialog(
+      context: context,
+      barrierDismissible:
+          false, // The user cannot dismiss the dialog by tapping outside it.
+      builder: (BuildContext context) {
+        return const Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0, // Removes shadow under the dialog
+          child: Column(
+            mainAxisSize: MainAxisSize.min, // Use minimum space
+            children: <Widget>[
+              CircularProgressIndicator(),
+              SizedBox(height: 15), // Add some spacing
+              Text('Loading...', style: TextStyle(color: Colors.white)),
+            ],
+          ),
+        );
+      },
+    );
 
     User? user = await _auth.signInWithEmailAndPassword(email, password);
 
@@ -842,9 +878,48 @@ class _OnboardingPageState extends State<OnboardingPage> {
     });
     if (user != null) {
       showToast(message: "You are successfully logged in");
+      Navigator.of(context, rootNavigator: true).pop();
       context.router.pushNamed(Pages.home);
     } else {
       showToast(message: "Retry");
+      Navigator.of(context, rootNavigator: true).pop();
+    }
+  }
+
+  void _resetPassword() async {
+    String email = emailController.text.trim();
+
+    showDialog(
+      context: context,
+      barrierDismissible:
+          false, // The user cannot dismiss the dialog by tapping outside it.
+      builder: (BuildContext context) {
+        return const Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0, // Removes shadow under the dialog
+          child: Column(
+            mainAxisSize: MainAxisSize.min, // Use minimum space
+            children: <Widget>[
+              CircularProgressIndicator(),
+              SizedBox(height: 15), // Add some spacing
+              Text('Loading...', style: TextStyle(color: Colors.white)),
+            ],
+          ),
+        );
+      },
+    );
+
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      showToast(message: "Password reset link sent! Check your email.");
+    } catch (e) {
+      showToast(
+          message: "An error occurred while trying to send reset link: $e");
+    } finally {
+      Navigator.of(context, rootNavigator: true).pop();
+      setState(() {
+        index = 5;
+      });
     }
   }
 }
