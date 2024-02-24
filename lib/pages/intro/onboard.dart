@@ -148,17 +148,24 @@ class _OnboardingPageState extends State<OnboardingPage> {
             controller: passwordController,
             width: 375.w,
             height: 50.h,
-            obscure: true,
+            obscure: !showPassword,
             hint: "Password",
             suffix: GestureDetector(
-              onTap: () => setState(() => showPassword = !showPassword),
-              child: AnimatedSwitcherTranslation.right(
+              onTap: () => setState(() {
+                showPassword = !showPassword; // Toggle the showPassword state
+              }),
+              child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 500),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
                 child: Icon(
+                  // Toggle the icon based on the showPassword state
                   showPassword
-                      ? Icons.visibility_outlined
-                      : Icons.visibility_off_outlined,
-                  key: ValueKey<bool>(showPassword),
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                  key: ValueKey<bool>(
+                      showPassword), // Ensure the icon updates correctly
                   size: 18.r,
                   color: Colors.grey,
                 ),
@@ -235,17 +242,24 @@ class _OnboardingPageState extends State<OnboardingPage> {
             controller: passwordController,
             width: 375.w,
             height: 50.h,
-            obscure: true,
+            obscure: !showPassword,
             hint: "Password",
             suffix: GestureDetector(
-              onTap: () => setState(() => showPassword = !showPassword),
-              child: AnimatedSwitcherTranslation.right(
+              onTap: () => setState(() {
+                showPassword = !showPassword; // Toggle the showPassword state
+              }),
+              child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 500),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
                 child: Icon(
+                  // Toggle the icon based on the showPassword state
                   showPassword
-                      ? Icons.visibility_outlined
-                      : Icons.visibility_off_outlined,
-                  key: ValueKey<bool>(showPassword),
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                  key: ValueKey<bool>(
+                      showPassword), // Ensure the icon updates correctly
                   size: 18.r,
                   color: Colors.grey,
                 ),
@@ -428,17 +442,24 @@ class _OnboardingPageState extends State<OnboardingPage> {
             controller: passwordController,
             width: 375.w,
             height: 50.h,
-            obscure: true,
+            obscure: !showPassword,
             hint: "Password",
             suffix: GestureDetector(
-              onTap: () => setState(() => showPassword = !showPassword),
-              child: AnimatedSwitcherTranslation.right(
+              onTap: () => setState(() {
+                showPassword = !showPassword; // Toggle the showPassword state
+              }),
+              child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 500),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
                 child: Icon(
+                  // Toggle the icon based on the showPassword state
                   showPassword
-                      ? Icons.visibility_outlined
-                      : Icons.visibility_off_outlined,
-                  key: ValueKey<bool>(showPassword),
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                  key: ValueKey<bool>(
+                      showPassword), // Ensure the icon updates correctly
                   size: 18.r,
                   color: Colors.grey,
                 ),
@@ -447,20 +468,28 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           SizedBox(height: 16.h),
           SpecialForm(
-            controller: emailController,
+            controller: passwordController,
             width: 375.w,
             height: 50.h,
-            obscure: true,
+            obscure:
+                !showPassword, // This should be the opposite of showPassword to work correctly
             hint: "Confirm Password",
             suffix: GestureDetector(
-              onTap: () => setState(() => showPassword = !showPassword),
-              child: AnimatedSwitcherTranslation.right(
+              onTap: () => setState(() {
+                showPassword = !showPassword; // Toggle the showPassword state
+              }),
+              child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 500),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
                 child: Icon(
+                  // Toggle the icon based on the showPassword state
                   showPassword
-                      ? Icons.visibility_outlined
-                      : Icons.visibility_off_outlined,
-                  key: ValueKey<bool>(showPassword),
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                  key: ValueKey<bool>(
+                      showPassword), // Ensure the icon updates correctly
                   size: 18.r,
                   color: Colors.grey,
                 ),
@@ -794,7 +823,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       showToast(message: "Your account is successfully created");
       context.router.pushNamed(Pages.home);
     } else {
-      showToast(message: "An error occured...");
+      showToast(message: "Retry");
     }
   }
 
@@ -815,7 +844,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       showToast(message: "You are successfully signed in");
       context.router.pushNamed(Pages.home);
     } else {
-      showToast(message: "An error occured...");
+      showToast(message: "Retry");
     }
   }
 }
