@@ -4,8 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:vet_connect/misc/constants.dart';
+import 'package:vet_connect/misc/toast.dart';
 import 'package:vet_connect/misc/widgets.dart';
 import 'package:animated_switcher_plus/animated_switcher_plus.dart';
+import 'package:vet_connect/user_auth/firebase_auth_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../home/map.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -20,6 +25,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
   bool acceptTerms = false;
   bool filledOTP = false;
   bool fromForgot = false;
+  bool _isSigning = false;
+  bool isSigningUp = false;
+
+  final FirebaseAuthService _auth = FirebaseAuthService();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -136,7 +145,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           SizedBox(height: 16.h),
           SpecialForm(
-            controller: emailController,
+            controller: passwordController,
             width: 375.w,
             height: 50.h,
             obscure: true,
@@ -167,7 +176,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           SizedBox(height: 47.h),
           ElevatedButton(
-            onPressed: () => context.router.pushNamed(Pages.home),
+            onPressed: _signIn,
             style: ElevatedButton.styleFrom(
               backgroundColor: appPurple,
               minimumSize: Size(327.w, 50.h),
@@ -193,7 +202,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   style:
                       context.textTheme.bodySmall!.copyWith(color: appPurple),
                   recognizer: TapGestureRecognizer()
-                    ..onTap = () => setState(() => index = 1),
+                    ..onTap = () => setState(() => index = 4),
                 ),
               ],
             ),
@@ -223,7 +232,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           SizedBox(height: 16.h),
           SpecialForm(
-            controller: emailController,
+            controller: passwordController,
             width: 375.w,
             height: 50.h,
             obscure: true,
@@ -258,10 +267,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           SizedBox(height: 20.h),
           ElevatedButton(
-            onPressed: () => setState(() {
-              index = 6;
-              fromForgot = false;
-            }),
+            onPressed: _signUp,
             style: ElevatedButton.styleFrom(
               backgroundColor:
                   acceptTerms ? appPurple : appPurple.withOpacity(0.5),
@@ -419,7 +425,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           SizedBox(height: 24.h),
           SpecialForm(
-            controller: emailController,
+            controller: passwordController,
             width: 375.w,
             height: 50.h,
             obscure: true,
@@ -769,6 +775,54 @@ class _OnboardingPageState extends State<OnboardingPage> {
         ),
       ),
     );
+  }
+
+  void _signUp() async {
+    setState(() {
+      isSigningUp = true;
+    });
+
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    User? user = await _auth.signUpWithEmailAndPassword(email, password);
+
+    setState(() {
+      isSigningUp = false;
+    });
+    if (user != null) {
+      showToast(message: "Your account is successfully created");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MapSample()),
+      );
+    } else {
+      showToast(message: "Some error happend");
+    }
+  }
+
+  void _signIn() async {
+    setState(() {
+      _isSigning = true;
+    });
+
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    User? user = await _auth.signInWithEmailAndPassword(email, password);
+
+    setState(() {
+      _isSigning = false;
+    });
+    if (user != null) {
+      showToast(message: "You are successfully signed in");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MapSample()),
+      );
+    } else {
+      showToast(message: "Some error happend");
+    }
   }
 }
 

@@ -22,6 +22,9 @@ import 'misc/constants.dart';
 import 'components/conversation.dart';
 import 'misc/notification_controller.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 Future<void> main() async {
   await AwesomeNotifications().initialize(
     'resource://drawable/ic_launcher_foreground',
@@ -59,6 +62,12 @@ Future<void> main() async {
   }
 
   runApp(const ProviderScope(child: VetConnect()));
+
+  WidgetsFlutterBinding
+      .ensureInitialized(); // Ensure plugin services are initialized
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 
 class VetConnect extends StatefulWidget {

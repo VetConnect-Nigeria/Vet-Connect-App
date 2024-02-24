@@ -52,7 +52,7 @@ dependencies:
   google_maps_flutter:
   google_maps_flutter_web:
   table_calendar:
-  firebase_core: 
+  firebase_core: ^2.24.2 
   location:
   google_maps_flutter_android:
   google_maps_flutter_platform_interface:

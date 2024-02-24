@@ -29,6 +29,13 @@
             {
               "client_id": "559402225071-qei8bttn131gc9uu7but2sjmr7miais4.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "559402225071-8lbrhdt4dkkb89pr75op3acg0nl4ud37.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vet.vetConnect"
+              }
             }
           ]
         }
