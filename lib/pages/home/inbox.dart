@@ -44,45 +44,44 @@ class _InboxPageState extends ConsumerState<InboxPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left_rounded),
-          iconSize: 26.r,
-          onPressed: () => context.router.pop(),
-        ),
-        elevation: 0.0,
-        title: Row(
-          children: [
-            CircleAvatar(
-              radius: 20.r,
-              backgroundImage: AssetImage(widget.conversation.image),
-            ),
-            SizedBox(width: 10.w),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.conversation.header,
-                  style: context.textTheme.titleSmall,
-                ),
-                if (widget.conversation.active) SizedBox(height: 5.h),
-                if (widget.conversation.active)
+          leading: IconButton(
+            icon: const Icon(Icons.chevron_left_rounded),
+            iconSize: 26.r,
+            onPressed: () => context.router.pop(),
+          ),
+          elevation: 0.0,
+          title: Row(
+            children: [
+              CircleAvatar(
+                radius: 20.r,
+                backgroundImage: AssetImage(widget.conversation.image),
+              ),
+              SizedBox(width: 10.w),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    "Active",
-                    style: context.textTheme.bodySmall,
-                  )
-              ],
-            )
-          ],
-        ),
-        actions: [
-          IconButton(
+                    widget.conversation.header,
+                    style: context.textTheme.titleSmall,
+                  ),
+                  if (widget.conversation.active) SizedBox(height: 5.h),
+                  if (widget.conversation.active)
+                    Text(
+                      "Active",
+                      style: context.textTheme.bodySmall,
+                    )
+                ],
+              )
+            ],
+          ),
+          actions: [
+            IconButton(
               onPressed: () => context.router.pushNamed(Pages.bookAppointment),
               iconSize: 26.r,
               icon: const Icon(Icons.add_rounded, color: appPurple),
             )
-        ]
-      ),
+          ]),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
