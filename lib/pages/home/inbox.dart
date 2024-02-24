@@ -75,6 +75,13 @@ class _InboxPageState extends ConsumerState<InboxPage> {
             )
           ],
         ),
+        actions: [
+          IconButton(
+              onPressed: () => context.router.pushNamed(Pages.bookAppointment),
+              iconSize: 26.r,
+              icon: const Icon(Icons.add_rounded, color: appPurple),
+            )
+        ]
       ),
       body: SafeArea(
         child: Padding(
