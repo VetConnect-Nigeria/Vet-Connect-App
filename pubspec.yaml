@@ -56,6 +56,9 @@ dependencies:
   location:
   google_maps_flutter_android:
   google_maps_flutter_platform_interface:
+  cloud_firestore:
+  firebase_auth:
+  firebase_storage:
 
 dev_dependencies:
   flutter_test:
