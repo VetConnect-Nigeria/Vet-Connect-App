@@ -841,7 +841,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       _isSigning = false;
     });
     if (user != null) {
-      showToast(message: "You are successfully signed in");
+      showToast(message: "You are successfully logged in");
       context.router.pushNamed(Pages.home);
     } else {
       showToast(message: "Retry");
