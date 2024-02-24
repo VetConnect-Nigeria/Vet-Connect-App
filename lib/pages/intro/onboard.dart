@@ -794,7 +794,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       showToast(message: "Your account is successfully created");
       context.router.pushNamed(Pages.home);
     } else {
-      showToast(message: "Some error happend");
+      showToast(message: "An error occured...");
     }
   }
 
@@ -815,7 +815,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       showToast(message: "You are successfully signed in");
       context.router.pushNamed(Pages.home);
     } else {
-      showToast(message: "Some error happend");
+      showToast(message: "An error occured...");
     }
   }
 }
