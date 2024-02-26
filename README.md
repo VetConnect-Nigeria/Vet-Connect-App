@@ -1,16 +1,43 @@
-# vet_connect
+# VetConnect
 
-A new Flutter project.
+## Project Overview
+
+VetConnect is a mobile application designed to improve access to veterinary services in remote areas of Nigeria. Utilizing Flutter and Firebase, it connects pet and livestock owners with veterinary professionals through a user-friendly platform. Features include a map-based search, appointment bookings, real-time chat, and notifications.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter (latest version)
+- Dart (latest version)
+- An IDE (e.g., Visual Studio Code, Android Studio)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Cloning the Repo
+
+To clone the repository, run the following command in your terminal:
+
+```bash
+git clone https://github.com/yourusername/vetconnect.git
+```
+
+Navigate to the project directory:
+
+```bash
+cd Vet-Connect-App
+```
+
+### Running the Project
+
+1. **Install Dependencies**: Run the following command in the terminal to fetch the project's dependencies:
+
+```bash
+flutter pub get
+```
+
+2. **Run the App**: Now, you can run the app on your connected device or emulator using:
+
+```bash
+flutter run
+```
