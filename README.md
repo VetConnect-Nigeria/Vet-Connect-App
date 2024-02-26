@@ -19,7 +19,7 @@ These instructions will get you a copy of the project up and running on your loc
 To clone the repository, run the following command in your terminal:
 
 ```bash
-git clone https://github.com/yourusername/vetconnect.git
+git clone https://github.com/VetConnect-Nigeria/Vet-Connect-App.git
 ```
 
 Navigate to the project directory:
